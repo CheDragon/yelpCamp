@@ -17,10 +17,11 @@ var indexRoutes         = require("./routes/index"),
     campgroundsRoutes   = require("./routes/campgrounds");
     
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.DATABASEURL, { useMongoClient: true });  
 
-//mongoose.connect("mongodb://rene:assassin@ds237748.mlab.com:37748/yelpcamp", { useMongoClient: true });  
-//mongoose.connect("mongodb://localhost/yelp_camp_price", { useMongoClient: true });  
+var url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp_price";
+mongoose.connect(url, { useMongoClient: true });  
+
+
 
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -33,7 +34,7 @@ app.use(flash());
 
 //Passport configuration
 app.use(require("express-session")({
-    secret: "Once again Rusty wins cutest dogs!",
+    secret: ENV['SECRET_KEY'],
     resave: false,
     saveUninitialized: false
 }));
